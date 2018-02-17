@@ -1,7 +1,7 @@
 var request = require('request')
 
 /**
- * A basic Hello World function
+ * Detect whether a string contains PII
  * @param {string} pii String that you would like to check for PII
  * @returns {string} PII found (person, location, or none)
  */
@@ -43,7 +43,7 @@ module.exports = (pii = 'Joe is from New York City', context, callback) => {
     var detected = ''
     for (var i = 0; i < values.length; i++) {
       console.log(values[i])
-      detected += ' ' + values[i][4]
+      detected += ' ' + values[i][1] + ',' + values[i][4]
     }
     detected = detected.substring(1)
     return callback(null, detected)
