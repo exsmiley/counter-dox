@@ -3,7 +3,7 @@ var request = require('request')
 /**
  * A basic Hello World function
  * @param {string} pii String that you would like to check for PII
- * @returns {boolean}  Whether the string contains an address
+ * @returns {string} PII found (person, location, or none)
  */
 module.exports = (pii = 'Joe is from New York City', context, callback) => {
   var data =
@@ -36,7 +36,16 @@ module.exports = (pii = 'Joe is from New York City', context, callback) => {
     if (error) {
       return callback(error)
     }
-    console.log(body.id) // Print the shortened url.
-    return callback(null, body)
+    console.log(body) // Print the shortened url.
+    var bodyParsed = JSON.parse(body)
+    var values = bodyParsed.Results.output1.value.Values
+    console.log(values)
+    var detected = ''
+    for (var i = 0; i < values.length; i++) {
+      console.log(values[i])
+      detected += ' ' + values[i][4]
+    }
+    detected = detected.substring(1)
+    return callback(null, detected)
   })
 }
