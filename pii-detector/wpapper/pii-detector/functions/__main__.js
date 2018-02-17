@@ -6,13 +6,31 @@ var request = require('request')
  * @returns {boolean}  Whether the string contains an address
  */
 module.exports = (pii = 'Joe is from New York City', context, callback) => {
+  var data =
+    {
+      'Inputs': {
+        'input1': {
+          'ColumnNames': [
+            'Col1'
+          ],
+          'Values': [
+            [
+              'Joe is from New York'
+            ]
+          ]
+        }
+      },
+      'GlobalParameters': {}
+    }
+  var bodyData = JSON.stringify(data)
   var options = {
     uri: process.env.cognitive,
     method: 'POST',
-    Authorization: process.env.key,
-    json: {
-      'Values': ['Joe is from New York City']
-    }
+    headers: {
+      'Authorization': process.env.key,
+      'Content-Type': 'application/json'
+    },
+    body: bodyData
   }
   request(options, function (error, response, body) {
     if (error) {
