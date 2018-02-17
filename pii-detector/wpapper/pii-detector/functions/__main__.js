@@ -15,7 +15,7 @@ module.exports = (pii = 'Joe is from New York City', context, callback) => {
           ],
           'Values': [
             [
-              'Joe is from New York'
+              pii
             ]
           ]
         }
