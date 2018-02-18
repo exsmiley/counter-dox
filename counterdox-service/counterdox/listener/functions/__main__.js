@@ -65,21 +65,22 @@ module.exports = async (context) => {
                     seenTweets.add(text)
                 }
 
-                let piiStr = await lib.wpapper['pii-detector']['@0.0.1']({pii: text});
+                let piiStr = await lib.wpapper['pii-detector']['@0.0.2']({pii: text});
 
                 let found = piiStr.includes('PER') && piiStr.includes('LOC');
 
                 if(found) {
                     let doxInfo = {};
-                    const fields = piiStr.split(' ');
+                    const fields = piiStr.split(';');
                     for(let field of fields) {
-                        const fieldData = field.split(',')
+                        const fieldData = field.split('|')
                         const dataInfo = fieldData.slice(0, fieldData.length-1).join();
                         const fieldType = fieldData[fieldData.length-1];
                         doxInfo[fieldType] = dataInfo;
                     }
                     doxInfo['tweet'] = text;
                     doxInfo['triggered'] = false;
+                    console.log(doxInfo)
 
                     let alerts = userDB.child(id).child('alerts');
                     await alerts.push(doxInfo);
