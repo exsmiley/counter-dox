@@ -117,7 +117,6 @@ const styles = StyleSheet.create({
     borderColor: "#FFFFFF",
     borderStyle: "solid",
     borderBottomWidth: 2,
-
   },
   avatar: {
     color: "#fff",
