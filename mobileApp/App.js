@@ -3,13 +3,42 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
+import Notification from './components/Notification'
+import * as firebase from 'firebase'
+import Fire from './api/Fire'
 
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
   };
 
+  componentDidMount() {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (!user) {
+          return;
+        }
+        let node = Fire.shared.userNode();
+        node.on("value", (snapshot) => {
+            this.setState({ user: snapshot.val() });
+        });
+      });
+  }
+
   render() {
+    var notificationDiv = <View />
+    if (this.state.user && this.state.user.getting_doxxed) {
+      notificationDiv = <Notification style={styles.notification}
+        pressedYes={() => {
+            Fire.shared.userNode().child("getting_doxxed").set(false);
+        }}
+        pressedNo={() => {
+            Fire.shared.userNode().child("getting_doxxed").set(false);
+        }}
+        title={"New Dox - Counter?"}
+        subtitle={this.state.user.getting_doxxed.tweet}
+      />
+    }
+
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         <AppLoading
@@ -24,6 +53,7 @@ export default class App extends React.Component {
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
           {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
           <RootNavigation />
+          { notificationDiv }
         </View>
       );
     }
@@ -65,4 +95,13 @@ const styles = StyleSheet.create({
     height: 24,
     backgroundColor: 'rgba(0,0,0,0.2)',
   },
+  notification: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 64,
+    width: "100%",
+    zIndex: 500,
+  }
 });

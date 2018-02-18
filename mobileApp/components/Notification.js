@@ -25,19 +25,6 @@ export default class Notification extends React.Component {
       this.state = {};
   }
 
-  static navigationOptions = ({ navigation }) => {
-    return {
-      title: "Counter-Dox",
-      headerRight: (
-        <Button
-          onPress={() => navigation.navigate('MyModal')}
-          title="Add"
-          color="#000"
-        />
-      )
-    }
-  };
-
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
@@ -51,23 +38,23 @@ export default class Notification extends React.Component {
   }
 
   render() {
-    var items = [];
-    if (this.state.protections) {
-      items = _.values(this.state.protections);
-    }
     return (
       <View style={styles.container}>
-        <FlatList style={styles.flatList}
-          data={items}
-          keyExtractor={(item) => item.name}
-          renderItem={({item}) => (
-            <View style={styles.item}>
-              <Text style={styles.itemName}>{item.name}</Text>
-              <Text style={styles.itemCity}>{item.city}</Text>
-            </View>
-          )}
-        >
-        </FlatList>
+        <Text style={{ fontSize: 15 }}>{this.props.title}</Text>
+        <Text style={{ fontSize: 12 }}>{this.props.subtitle}</Text>
+        <View style={styles.buttonContainer}>
+            <Button
+                style={styles.button}
+                title={"Yes"}
+                onPress={this.props.pressedYes}
+            />
+            <View style={styles.spacer} />
+            <Button
+                style={styles.button}
+                onPress={this.props.pressedNo}
+                title={"No"}
+            />
+        </View>
       </View>
     );
   }
@@ -86,8 +73,36 @@ export default class Notification extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 84,
+    flexDirection: "column",
+    alignItems: "stretch",
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    paddingTop: 25,
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginBottom: 50,
+    borderBottomWidth: 1,
+    borderBottomColor: "rgba(125, 125, 125, 0.5)",
+  },
+  buttonContainer: {
     flex: 1,
-    backgroundColor: '#fff',
+    flexDirection: "row",
+    justifyContent: "center",
+    display: "flex",
+    marginBottom: 10,
+  },
+  spacer: {
+    flex: 1,
+  },
+  button: {
+    backgroundColor: "#000",
+    flex: 1,
+    padding: 10,
+    borderRadius: 2,
   },
   developmentModeText: {
     marginBottom: 20,
