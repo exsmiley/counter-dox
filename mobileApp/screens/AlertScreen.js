@@ -1,7 +1,10 @@
 import React from 'react';
 import Fire from '../api/Fire'
 import * as firebase from 'firebase'
+import { Ionicons } from '@expo/vector-icons';
 const _ = require("lodash");
+import { Button } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {
   Image,
@@ -12,7 +15,6 @@ import {
   FlatList,
   TouchableOpacity,
   View,
-  Button,
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
@@ -67,8 +69,11 @@ export default class AlertScreen extends React.Component {
             }
             else {
               actions = (
-                <Button 
-                  title="Trigger" 
+                <Icon
+                  style={{
+                    marginLeft: 10,
+                  }}
+                  name='bolt' size={25} color={"white"}
                   onPress={() => {
                       Fire.shared.doxx(item.id)
                   }}
