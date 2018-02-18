@@ -5,12 +5,12 @@ import { StackNavigator } from 'react-navigation';
 
 import Colors from '../constants/Colors';
 
-import HomeScreen from '../screens/HomeScreen';
+import AlertScreen from '../screens/AlertScreen';
 
 export default StackNavigator(
   {
-    HomeScr: {
-      screen: HomeScreen,
+    AlertScr: {
+      screen: AlertScreen,
     },
     
   },

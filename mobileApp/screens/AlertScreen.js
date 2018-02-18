@@ -18,12 +18,18 @@ import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 
-export default class Notification extends React.Component {
+export default class AlertScreen extends React.Component {
 
   constructor() {
       super();
       this.state = {};
   }
+
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: "Alerts"
+    }
+  };
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -32,29 +38,52 @@ export default class Notification extends React.Component {
       }
       let node = Fire.shared.userNode();
       node.on("value", (snapshot) => {
-        this.setState(snapshot.val());
+          this.setState(snapshot.val());
       });
     });
   }
 
   render() {
+    var items = [];
+    if (this.state.alerts) {
+      _.forEach(this.state.alerts, (value, key) => {
+          value["id"] = key;
+          items.push(value);
+      });
+    }
+
     return (
       <View style={styles.container}>
-        <Text style={{ fontSize: 15 }}>{this.props.title}</Text>
-        <Text style={{ fontSize: 12 }}>{this.props.subtitle}</Text>
-        <View style={styles.buttonContainer}>
-            <Button
-                style={styles.button}
-                title={"Yes"}
-                onPress={this.props.pressedYes}
-            />
-            <View style={styles.spacer} />
-            <Button
-                style={styles.button}
-                onPress={this.props.pressedNo}
-                title={"No"}
-            />
-        </View>
+        <FlatList style={styles.flatList}
+          data={items}
+          keyExtractor={(item) => item.name}
+          renderItem={({item}) => {
+
+            var actions;
+            if (item.triggered) {
+              actions = (
+                <Text>Already Triggered</Text>
+              )
+            }
+            else {
+              actions = (
+                <Button 
+                  title="Trigger" 
+                  onPress={() => {
+                      Fire.shared.doxx(item.id)
+                  }}
+                  />
+              )
+            }
+
+            return (<View style={styles.item}>
+              <Text style={styles.itemName}>{item.tweet}</Text>
+              {actions}
+            </View>);
+          }
+        }
+        >
+        </FlatList>
       </View>
     );
   }
@@ -73,36 +102,8 @@ export default class Notification extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 84,
-    flexDirection: "column",
-    alignItems: "stretch",
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    paddingTop: 25,
-    paddingLeft: 10,
-    paddingRight: 10,
-    marginBottom: 50,
-    borderBottomWidth: 1,
-    borderBottomColor: "rgba(125, 125, 125, 0.5)",
-  },
-  buttonContainer: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    display: "flex",
-    marginBottom: 10,
-  },
-  spacer: {
-    flex: 1,
-  },
-  button: {
-    backgroundColor: "#000",
-    flex: 1,
-    padding: 10,
-    borderRadius: 2,
+    backgroundColor: '#fff',
   },
   developmentModeText: {
     marginBottom: 20,

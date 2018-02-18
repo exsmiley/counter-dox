@@ -27,7 +27,7 @@ export default class HomeScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "Counter-Dox",
+      title: "Monitoring",
       headerRight: (
         <Button
           onPress={() => navigation.navigate('MyModal')}

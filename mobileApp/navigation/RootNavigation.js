@@ -7,11 +7,12 @@ import HomeNavigation from './HomeNavigation';
 import ModalScreen from '../screens/AddModal';
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
 import ModalNavigation from './ModalNavigation';
+import TabNavigation from './TabNavigation';
 
 const RootStackNavigator = StackNavigator(
   {
-    Home: {
-      screen: HomeNavigation,
+    Main: {
+      screen: TabNavigation,
     },
     MyModal: {
       screen: ModalNavigation,

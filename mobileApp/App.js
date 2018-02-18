@@ -6,6 +6,7 @@ import RootNavigation from './navigation/RootNavigation';
 import Notification from './components/Notification'
 import * as firebase from 'firebase'
 import Fire from './api/Fire'
+const _ = require("lodash");
 
 export default class App extends React.Component {
   state = {
@@ -27,15 +28,18 @@ export default class App extends React.Component {
   render() {
     var notificationDiv = <View />
     if (this.state.user && this.state.user.getting_doxxed) {
+      var alertKey = _.sortBy(_.keys(this.state.user.alerts))[0];
+      var alert = this.state.user.alerts[alertKey];
       notificationDiv = <Notification style={styles.notification}
         pressedYes={() => {
+            Fire.shared.doxx(alertKey);
             Fire.shared.userNode().child("getting_doxxed").set(false);
         }}
         pressedNo={() => {
             Fire.shared.userNode().child("getting_doxxed").set(false);
         }}
         title={"New Dox - Counter?"}
-        subtitle={this.state.user.getting_doxxed.tweet}
+        subtitle={alert.tweet}
       />
     }
 

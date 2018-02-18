@@ -64,39 +64,10 @@ class Fire {
     const setWithMerge = ref.set({ uid, ...info }, { merge: true });
   };
 
-  saveScore = score => {
-    this.saveUserInfo({
-      timestamp: new Date().getTime(),
-      score,
-    });
-  };
-
-  getPagedScore = async ({ size, start }) => {
-    const slug = getSlug();
-
-    let ref = this.db
-      .collection('users')
-      .where('slug', '==', slug)
-      .orderBy('score', 'desc')
-      .limit(size);
-    try {
-      if (start) {
-        ref = ref.startAfter(start);
-      }
-
-      const querySnapshot = await ref.get();
-      const data = [];
-      querySnapshot.forEach(function(doc) {
-        const _data = doc.data();
-        data.push({ key: doc.id, ..._data, title: _data.deviceName });
-      });
-      const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-
-      return { data, cursor: lastVisible };
-    } catch (error) {
-      console.error('Error getting documents: ', error);
-    }
-  };
+  doxx = (alertID) => {
+    const { uid } = this;
+    
+  }
 
   get db() {
     return firebase.database().ref();
