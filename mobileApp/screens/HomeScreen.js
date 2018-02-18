@@ -53,13 +53,16 @@ export default class HomeScreen extends React.Component {
   render() {
     var items = [];
     if (this.state.protections) {
-      items = _.values(this.state.protections);
+      _.forEach(this.state.protections, (value, key) => {
+          value["id"] = key;
+          items.push(value);
+      });
     }
     return (
       <View style={styles.container}>
         <FlatList style={styles.flatList}
           data={items}
-          keyExtractor={(item) => item.name}
+          keyExtractor={(item) => item.id}
           renderItem={({item}) => (
             <View style={styles.item}>
               <Text style={styles.itemName}>{item.name}</Text>

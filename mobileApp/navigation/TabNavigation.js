@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import HomeNavigation from './HomeNavigation';
 import ModalScreen from '../screens/AddModal';
 import AlertNavigation from './AlertNavigation';
+import CounterNavigation from './CounterNavigation';
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
 import ModalNavigation from './ModalNavigation';
 
@@ -18,6 +19,9 @@ export default TabNavigator(
     Alerts: {
         screen: AlertNavigation,
     },
+    Counters: {
+      screen: CounterNavigation,
+    }
   },
   {
     navigationOptions: ({ navigation }) => ({
