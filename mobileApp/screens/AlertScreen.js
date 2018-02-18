@@ -63,9 +63,6 @@ export default class AlertScreen extends React.Component {
 
             var actions;
             if (item.triggered) {
-              actions = (
-                <Text>Already Triggered</Text>
-              )
             }
             else {
               actions = (
@@ -80,8 +77,14 @@ export default class AlertScreen extends React.Component {
                   />
               )
             }
-
-            return (<View style={styles.item}>
+            var styleTrigger = {};
+            if (item.triggered) {
+              styleTrigger = styles.itemTriggered
+            }
+            else {
+              styleTrigger = styles.item
+            }
+            return (<View style={styleTrigger}>
               <View style={styles.circle}>
                 <Text style={styles.avatar}>5</Text>
               </View>
@@ -133,7 +136,18 @@ const styles = StyleSheet.create({
     borderColor: "#FFFFFF",
     borderStyle: "solid",
     borderBottomWidth: 2,
-
+  },
+  itemTriggered: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingLeft: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderColor: "#FFFFFF",
+    borderStyle: "solid",
+    borderBottomWidth: 2,
+    backgroundColor: "#82B47A"
   },
   avatar: {
     color: "#fff",
