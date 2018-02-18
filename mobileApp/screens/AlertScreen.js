@@ -1,7 +1,10 @@
 import React from 'react';
 import Fire from '../api/Fire'
 import * as firebase from 'firebase'
+import { Ionicons } from '@expo/vector-icons';
 const _ = require("lodash");
+import { Button } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {
   Image,
@@ -12,7 +15,6 @@ import {
   FlatList,
   TouchableOpacity,
   View,
-  Button,
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
@@ -61,22 +63,28 @@ export default class AlertScreen extends React.Component {
 
             var actions;
             if (item.triggered) {
-              actions = (
-                <Text>Already Triggered</Text>
-              )
             }
             else {
               actions = (
-                <Button 
-                  title="Trigger" 
+                <Icon
+                  style={{
+                    marginLeft: 10,
+                  }}
+                  name='bolt' size={25} color={"white"}
                   onPress={() => {
                       Fire.shared.doxx(item.id)
                   }}
                   />
               )
             }
-
-            return (<View style={styles.item}>
+            var styleTrigger = {};
+            if (item.triggered) {
+              styleTrigger = styles.itemTriggered
+            }
+            else {
+              styleTrigger = styles.item
+            }
+            return (<View style={styleTrigger}>
               <View style={styles.circle}>
                 <Text style={styles.avatar}>5</Text>
               </View>
@@ -128,7 +136,18 @@ const styles = StyleSheet.create({
     borderColor: "#FFFFFF",
     borderStyle: "solid",
     borderBottomWidth: 2,
-
+  },
+  itemTriggered: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingLeft: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderColor: "#FFFFFF",
+    borderStyle: "solid",
+    borderBottomWidth: 2,
+    backgroundColor: "#82B47A"
   },
   avatar: {
     color: "#fff",
@@ -145,6 +164,7 @@ const styles = StyleSheet.create({
     width: 40,
     justifyContent: 'center', 
     alignItems: 'center',
+    marginRight: 10,
   },
   infoContainer: {
     display: "flex",

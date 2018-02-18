@@ -117,7 +117,6 @@ const styles = StyleSheet.create({
     borderColor: "#FFFFFF",
     borderStyle: "solid",
     borderBottomWidth: 2,
-
   },
   avatar: {
     color: "#fff",
@@ -134,6 +133,7 @@ const styles = StyleSheet.create({
     width: 40,
     justifyContent: 'center', 
     alignItems: 'center',
+    marginRight: 10,
   },
   infoContainer: {
     display: "flex",

@@ -1,2 +1,6 @@
 # Counter-DOX 9001
-:O :O :O
+Doxing is a huge security problem for activists. People who speak out find their addresses posted online, often accompanied by death threats or other material meant to intimidate and silence them. Worst of all, doxing is legal, and even when it crosses a line it's hard to track the doxers down. This poses a threat to their personal security, as well as their ability to speak out.
+
+Doxing is typically done by anonymous accounts, set up for the purpose of spreading information about someone. This means that all accounts have basically no credibility, so it is easy to flood a doxing thread with noise.
+
+We are introducing the Counter Doxer 9001. The Counter Doxer allows activists to monitor Twitter to see if anyone posts their name and address. If so, they receive a notification and the option to "counter dox", which consists of flooding Twitter with fake addresses to drown out the real ones. This ensures that activists can feel safe and secure, and acts as an effective way to ethically counter a dox meant to intimidate and silence them.

@@ -5,7 +5,7 @@ import random
 from flask import Flask
 
 app = Flask(__name__)
-addresses = np.load('generated_addresses.npy')
+addresses = np.load('generated_addressesv2.npy')
 size = len(addresses)
 
 @app.route("/")
