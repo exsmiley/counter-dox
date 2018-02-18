@@ -77,6 +77,7 @@ export default class AlertScreen extends React.Component {
             }
 
             return (<View style={styles.item}>
+              <Text style={styles.avatar}>5</Text>
               <Text style={styles.itemName}>{item.tweet}</Text>
               {actions}
             </View>);
@@ -115,9 +116,15 @@ const styles = StyleSheet.create({
   flatList: {
     flex: 1,
   },
+  avatar: {
+    width: 25,
+    height: 25,
+    borderRadius: 12,
+    color: "#000",
+  },
   item: {
     flex: 1,
-    flexDirection: "column",
+    flexDirection: "row",
     alignItems: "flex-start",
     paddingLeft: 10,
   },

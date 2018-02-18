@@ -29,9 +29,11 @@ export default TabNavigator(
         const { routeName } = navigation.state;
         let iconName;
         if (routeName === 'Home') {
-          iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+          iconName = `ios-desktop`;
         } else if (routeName === 'Alerts') {
-          iconName = `ios-options${focused ? '' : '-outline'}`;
+          iconName = `ios-alert`;
+        } else if (routeName === 'Counters') {
+          iconName = `ios-flash`;
         }
 
         // You can return any component that you like here! We usually use an

@@ -65,8 +65,11 @@ export default class HomeScreen extends React.Component {
           keyExtractor={(item) => item.id}
           renderItem={({item}) => (
             <View style={styles.item}>
-              <Text style={styles.itemName}>{item.name}</Text>
-              <Text style={styles.itemCity}>{item.city}</Text>
+              <Text style={styles.avatar}>5</Text>
+              <View style={styles.infoContainer}>
+                <Text style={styles.itemName}>{item.name}</Text>
+                <Text style={styles.itemCity}>{item.city}</Text>
+              </View>
             </View>
           )}
         >
@@ -104,8 +107,8 @@ const styles = StyleSheet.create({
   },
   item: {
     flex: 1,
-    flexDirection: "column",
-    alignItems: "flex-start",
+    flexDirection: "row",
+    alignItems: "center",
     paddingLeft: 10,
     paddingTop: 15,
     paddingBottom: 15,
@@ -113,6 +116,17 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderBottomWidth: 2,
 
+  },
+  avatar: {
+    width: 25,
+    height: 25,
+    borderRadius: 12,
+    color: "#fff",
+  },
+  infoContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
   },
   itemName: {
       fontSize: 15,
