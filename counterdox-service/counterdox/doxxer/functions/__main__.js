@@ -48,24 +48,26 @@ module.exports = async (user='ISsAuO6fzWU9Clq9pFvE3VOyDci1', alert='-L5bLhjL5jTW
     let tweet = alertInfo.tweet;
     let location = alertInfo.LOC;
 
-    let samples = []
+    let samples = {}
 
     // actual tweets
     for(let i = 0; i < sendNum; i++) {
         let response = await axios.get(fake1);
         let sampleTweet = tweet.replace(location, response.data);
         await T.post('statuses/update', { status: sampleTweet });
-        samples.push(sampleTweet);
+        // samples.push(sampleTweet);
+        samples[userDB.push().key] = sampleTweet
     }
 
     // just more samples
     for(let i = 0; i < totalNum-sendNum; i++) {
         let response = await axios.get(fake1);
         let sampleTweet = tweet.replace(location, response.data);
-        samples.push(sampleTweet);
+        // samples.push(sampleTweet);
+        samples[userDB.push().key] = sampleTweet
     }
 
-    userDB.child('sent_doxxes').push(samples);
+    userDB.child('sent_doxxes').update(samples);
     
     return true;
 };
