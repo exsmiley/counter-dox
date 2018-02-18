@@ -16,24 +16,38 @@ admin.initializeApp({
     databaseURL: 'https://counterdox-2f53d.firebaseio.com/',
     credential: admin.credential.cert(serviceAccount)
 });
-let userDB = admin.database().ref("/users");;
 
 const T = new Twit(twitterConfig);
 const watchCount = 3;
+const fake1 = 'http://vps.papper.me:5000/fake';
+
+const totalNum = 50;
+const sendNum = 5;
 
 /**
 * Posts doxxing to the EvenMooreReal account
-* @param {string} tweet the original tweet
-* @param {string} location the text of the location in the tweet
-* @param {string} id of the user being attacked
+* @param {string} user id of the user being doxxed
+* @param {string} alert id of the dox that we're countering
 * @returns {boolean}
 */
-module.exports = async (tweet = 'Daniel does not live in Hanover', location='Hanover', id='GbNAbzAZ40RK20g4rYaOje6N8ox2', context) => {
-    const fake1 = 'http://vps.papper.me:5000/fake';
-    let db = userDB.child(id).child('sent_doxxes');
+module.exports = async (user='ISsAuO6fzWU9Clq9pFvE3VOyDci1', alert='-L5bLhjL5jTW_ymp87hX', context) => {
+    let userDB = admin.database().ref("/users").child(user);
+    let alertDB = userDB.child('alerts').child(alert);
 
-    let totalNum = 500;
-    let sendNum = 5;
+    let alertPreInfo = await alertDB.once('value');
+    let alertInfo = alertPreInfo.val();
+    console.log(alertInfo)
+
+    if(alertInfo.triggered) {
+        return false;
+    } else {
+        alertInfo.triggered = true;
+        alertDB.set(alertInfo)
+    }
+
+    let tweet = alertInfo.tweet;
+    let location = alertInfo.LOC;
+
     let samples = []
 
     // actual tweets
@@ -51,7 +65,7 @@ module.exports = async (tweet = 'Daniel does not live in Hanover', location='Han
         samples.push(sampleTweet);
     }
 
-    db.push(samples);
+    userDB.child('sent_doxxes').push(samples);
     
     return true;
 };

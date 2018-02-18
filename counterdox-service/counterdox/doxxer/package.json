@@ -1,6 +1,6 @@
 {
   "name": "doxxer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "author": "counterdox <counterdox@mit.edu>",
   "main": "functions/__main__.js",
@@ -14,7 +14,7 @@
   "stdlib": {
     "build": "faaslang",
     "name": "counterdox/doxxer",
-    "timeout": 120000,
+    "timeout": 30000,
     "publish": true,
     "personalize": {
       "keys": [],
