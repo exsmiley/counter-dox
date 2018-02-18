@@ -150,6 +150,7 @@ const styles = StyleSheet.create({
     width: 40,
     justifyContent: 'center', 
     alignItems: 'center',
+    marginRight: 10,
   },
   infoContainer: {
     display: "flex",
