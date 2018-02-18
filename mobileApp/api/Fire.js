@@ -1,3 +1,4 @@
+const axios = require('axios');
 const firebase = require('firebase');
 // Required for side-effects
 
@@ -66,7 +67,13 @@ class Fire {
 
   doxx = (alertID) => {
     const { uid } = this;
-    
+    axios.get(
+      `https://counterdox.lib.id/doxxer@0.0.2/?user=${uid}&alert=${alertID}`
+    ).then(function (response) {
+
+    }).catch(function (err) {
+
+    });
   }
 
   get db() {

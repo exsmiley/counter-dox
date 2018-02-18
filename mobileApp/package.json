@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
+    "axios": "^0.17.1",
     "expo": "^25.0.0",
     "firebase": "^4.10.0",
     "lodash": "^4.17.5",
