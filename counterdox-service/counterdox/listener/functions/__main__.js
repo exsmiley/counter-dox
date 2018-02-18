@@ -46,11 +46,18 @@ module.exports = async (context) => {
             }
 
             const response = await T.get('search/tweets', params);
+            let seenTweets = new Set()
 
             for(let tweet of response.data.statuses) {
                 let text = tweet.full_text;
                 if(tweet.hasOwnProperty('retweeted_status')) {
                     text = tweet.retweeted_status.full_text;
+                }
+
+                if(seenTweets.has(text)) {
+                    continue;
+                } else {
+                    seenTweets.add(text)
                 }
                 
                 let piiStr = await lib.wpapper['pii-detector']['@0.0.1']({pii: text});
