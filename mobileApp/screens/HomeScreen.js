@@ -130,10 +130,12 @@ const styles = StyleSheet.create({
   },
   itemName: {
       fontSize: 15,
-      color: "#FFFFFF"
+      color: "#FFFFFF",
+      fontFamily: "AvenirNext-Bold"
   },
   itemCity: {
     fontSize: 12,
-    color: "#F3F3F3"
+    color: "#F3F3F3",
+    fontFamily: "AvenirNext-DemiBold"
   },
 });
