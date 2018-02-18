@@ -1,0 +1,7 @@
+{
+  "name": "address-generator",
+  "profile": "default",
+  "regions": [
+    "us-east-1"
+  ]
+}
