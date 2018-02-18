@@ -37,6 +37,10 @@ module.exports = async (context) => {
             names.push(userObj[id].protections[pid].name);
         }
 
+        // manage them on a user level in case there are duplicates
+        let seenTweets = new Set();
+        console.log(`Managing ${id}...`);
+
         for(let name of names) {
 
             let params = {
@@ -46,29 +50,40 @@ module.exports = async (context) => {
             }
 
             const response = await T.get('search/tweets', params);
-            let seenTweets = new Set()
-
+            if(!response.data.statuses) {
+                continue;
+            }
             for(let tweet of response.data.statuses) {
                 let text = tweet.full_text;
                 if(tweet.hasOwnProperty('retweeted_status')) {
                     text = tweet.retweeted_status.full_text;
                 }
 
-                if(seenTweets.has(text)) {
+                if(seenTweets.has(text) || tweet.user.screen_name == 'EvenMooreReal') {
                     continue;
                 } else {
                     seenTweets.add(text)
                 }
-                
+
                 let piiStr = await lib.wpapper['pii-detector']['@0.0.1']({pii: text});
 
                 let found = piiStr.includes('PER') && piiStr.includes('LOC');
 
                 if(found) {
-                    let user = userDB.child(id);
-                    let userData = userObj[id];
-                    userData.getting_doxxed = true;
-                    user.set(userData);
+                    let doxInfo = {};
+                    const fields = piiStr.split(' ');
+                    for(let field of fields) {
+                        const fieldData = field.split(',')
+                        const dataInfo = fieldData.slice(0, fieldData.length-1).join();
+                        const fieldType = fieldData[fieldData.length-1];
+                        doxInfo[fieldType] = dataInfo;
+                    }
+                    doxInfo['tweet'] = text;
+                    doxInfo['triggered'] = false;
+
+                    let alerts = userDB.child(id).child('alerts');
+                    await alerts.push(doxInfo);
+                    console.log(text);
 
                     // TODO add push notification
                 }
