@@ -120,12 +120,9 @@ const styles = StyleSheet.create({
 
   },
   avatar: {
-    width: 25,
-    height: 25,
     color: "#fff",
     textAlign: "center",
-    marginTop: 9,
-    marginLeft: 5,
+    textAlignVertical: "center"
   },
   circle: {
     borderRadius: 100,
@@ -133,6 +130,8 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     height: 40,
     width: 40,
+    justifyContent: 'center', 
+    alignItems: 'center',
   },
   infoContainer: {
     display: "flex",
