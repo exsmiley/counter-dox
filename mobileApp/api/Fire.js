@@ -68,7 +68,7 @@ class Fire {
   doxx = (alertID) => {
     const { uid } = this;
     axios.get(
-      `https://counterdox.lib.id/doxxer@0.0.2/?user=${uid}&alert=${alertID}`
+      `https://counterdox.lib.id/doxxer@0.0.3/?user=${uid}&alert=${alertID}`
     ).then(function (response) {
 
     }).catch(function (err) {
