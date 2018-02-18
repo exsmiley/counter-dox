@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
       height: 30,
     },
     alert: {
-        backgroundColor: "#3CC29E",
+        backgroundColor: "#6EB0AC",
         color: "white"
     },
     content: {

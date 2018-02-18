@@ -90,7 +90,7 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#14161B"
   },
   developmentModeText: {
     marginBottom: 20,
@@ -107,13 +107,19 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "flex-start",
     paddingLeft: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderColor: "#FFFFFF",
+    borderStyle: "solid",
+    borderBottomWidth: 2,
+
   },
   itemName: {
       fontSize: 15,
-      color: "#000",
+      color: "#FFFFFF"
   },
   itemCity: {
     fontSize: 12,
-    color: "#555",
+    color: "#F3F3F3"
   },
 });
