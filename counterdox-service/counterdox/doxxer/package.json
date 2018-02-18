@@ -1,6 +1,6 @@
 {
   "name": "doxxer",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "author": "counterdox <counterdox@mit.edu>",
   "main": "functions/__main__.js",

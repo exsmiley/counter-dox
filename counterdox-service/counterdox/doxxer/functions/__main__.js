@@ -18,8 +18,8 @@ admin.initializeApp({
 });
 
 const T = new Twit(twitterConfig);
-const watchCount = 3;
 const fake1 = 'http://vps.papper.me:5000/fake';
+const fake2 = 'http://vps.papper.me:4999/'
 
 const totalNum = 50;
 const sendNum = 5;
@@ -36,7 +36,6 @@ module.exports = async (user='ISsAuO6fzWU9Clq9pFvE3VOyDci1', alert='-L5bLhjL5jTW
 
     let alertPreInfo = await alertDB.once('value');
     let alertInfo = alertPreInfo.val();
-    console.log(alertInfo)
 
     if(alertInfo.triggered) {
         return false;
@@ -52,7 +51,7 @@ module.exports = async (user='ISsAuO6fzWU9Clq9pFvE3VOyDci1', alert='-L5bLhjL5jTW
 
     // actual tweets
     for(let i = 0; i < sendNum; i++) {
-        let response = await axios.get(fake1);
+        let response = await axios.get(fake2);
         let sampleTweet = tweet.replace(location, response.data);
         await T.post('statuses/update', { status: sampleTweet });
         // samples.push(sampleTweet);

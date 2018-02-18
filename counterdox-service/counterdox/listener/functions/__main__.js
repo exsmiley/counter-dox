@@ -30,6 +30,21 @@ module.exports = async (context) => {
     let userObj = usersObjFinder.val();
 
     for(let id in userObj) {
+        let lastSeenDB = userDB.child(id).child('lastSeen');
+        let lastSeenFinder = await lastSeenDB.once('value');
+        let lastSeen = lastSeenFinder.val();
+        console.log(lastSeen)
+        if(!lastSeen) {
+            lastSeen = [];
+        } else {
+            let els = []
+            for(let el in lastSeen) {
+                els.push(lastSeen[el]);
+            }
+            lastSeen = els;
+        }
+        console.log(lastSeen)
+        let seenSet = new Set(lastSeen);
 
         let names = [userObj[id].twitterHandle];
 
@@ -42,7 +57,7 @@ module.exports = async (context) => {
         console.log(`Managing ${id}...`);
 
         for(let name of names) {
-
+            console.log(name)
             let params = {
                 q: name,
                 count: watchCount,
@@ -54,12 +69,14 @@ module.exports = async (context) => {
                 continue;
             }
             for(let tweet of response.data.statuses) {
+
                 let text = tweet.full_text;
                 if(tweet.hasOwnProperty('retweeted_status')) {
                     text = tweet.retweeted_status.full_text;
                 }
 
-                if(seenTweets.has(text) || tweet.user.screen_name == 'EvenMooreReal') {
+                let dedupText = tweet.id + '|' + text + '|' + Date.parse(tweet.created_at);
+                if(seenTweets.has(text) || tweet.user.screen_name == 'EvenMooreReal' || seenSet.has(dedupText)) {
                     continue;
                 } else {
                     seenTweets.add(text)
@@ -67,28 +84,49 @@ module.exports = async (context) => {
 
                 let piiStr = await lib.wpapper['pii-detector']['@0.0.2']({pii: text});
 
-                let found = piiStr.includes('PER') && piiStr.includes('LOC');
-
+                let found = piiStr.includes('PER') && (piiStr.includes('LOC') || piiStr.includes('ORG'));
+                
                 if(found) {
                     let doxInfo = {};
                     const fields = piiStr.split(';');
                     for(let field of fields) {
                         const fieldData = field.split('|')
                         const dataInfo = fieldData.slice(0, fieldData.length-1).join();
-                        const fieldType = fieldData[fieldData.length-1];
+                        let fieldType = fieldData[fieldData.length-1];
+                        if(fieldType == 'ORG') {
+                            fieldType = 'LOC';
+                        }
                         doxInfo[fieldType] = dataInfo;
                     }
                     doxInfo['tweet'] = text;
                     doxInfo['triggered'] = false;
-                    console.log(doxInfo)
 
                     let alerts = userDB.child(id).child('alerts');
                     await alerts.push(doxInfo);
-                    console.log(text);
-
+                    await userDB.child(id).child('getting_doxxed').set(false);
+                    seenSet.add(dedupText);
                     // TODO add push notification
                 }
             }
+
+            // add dedup stuff
+            let dedupArray = Array.from(seenSet);
+            dedupArray.sort(function(x,y) {
+                let xsplit = x.split('|')
+                let x1 = parseInt(xsplit[xsplit.length-1])
+                let ysplit = y.split('|')
+                let y1 = parseInt(ysplit[ysplit.length-1])
+                return x1-y1;
+            });
+            dedupArray = dedupArray.slice(0,5);
+
+            let dedupObj = {};
+
+            for(let val of dedupArray) {
+                dedupObj[lastSeenDB.push().key] = val;
+            }
+
+            lastSeenDB.set(dedupObj);
         }
     }    
 
