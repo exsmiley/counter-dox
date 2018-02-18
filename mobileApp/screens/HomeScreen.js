@@ -65,7 +65,9 @@ export default class HomeScreen extends React.Component {
           keyExtractor={(item) => item.id}
           renderItem={({item}) => (
             <View style={styles.item}>
-              <Text style={styles.avatar}>5</Text>
+              <View style={styles.circle}>
+                <Text style={styles.avatar}>5</Text>
+              </View>
               <View style={styles.infoContainer}>
                 <Text style={styles.itemName}>{item.name}</Text>
                 <Text style={styles.itemCity}>{item.city}</Text>
@@ -118,10 +120,20 @@ const styles = StyleSheet.create({
 
   },
   avatar: {
-    width: 25,
-    height: 25,
-    borderRadius: 12,
     color: "#fff",
+    textAlign: "center",
+    textAlignVertical: "center",
+    color: "#6FED8B",
+    fontFamily: "AvenirNext-Bold"
+  },
+  circle: {
+    borderRadius: 100,
+    borderWidth: 3,
+    borderColor: "#96F3F3",
+    height: 40,
+    width: 40,
+    justifyContent: 'center', 
+    alignItems: 'center',
   },
   infoContainer: {
     display: "flex",

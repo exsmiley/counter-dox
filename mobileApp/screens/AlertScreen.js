@@ -77,7 +77,9 @@ export default class AlertScreen extends React.Component {
             }
 
             return (<View style={styles.item}>
-              <Text style={styles.avatar}>5</Text>
+              <View style={styles.circle}>
+                <Text style={styles.avatar}>5</Text>
+              </View>
               <Text style={styles.itemName}>{item.tweet}</Text>
               {actions}
             </View>);
@@ -104,7 +106,7 @@ export default class AlertScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#14161B"
   },
   developmentModeText: {
     marginBottom: 20,
@@ -116,24 +118,47 @@ const styles = StyleSheet.create({
   flatList: {
     flex: 1,
   },
-  avatar: {
-    width: 25,
-    height: 25,
-    borderRadius: 12,
-    color: "#000",
-  },
   item: {
     flex: 1,
     flexDirection: "row",
-    alignItems: "flex-start",
+    alignItems: "center",
     paddingLeft: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderColor: "#FFFFFF",
+    borderStyle: "solid",
+    borderBottomWidth: 2,
+
+  },
+  avatar: {
+    color: "#fff",
+    textAlign: "center",
+    textAlignVertical: "center",
+    color: "#6FED8B",
+    fontFamily: "AvenirNext-Bold"
+  },
+  circle: {
+    borderRadius: 100,
+    borderWidth: 3,
+    borderColor: "#96F3F3",
+    height: 40,
+    width: 40,
+    justifyContent: 'center', 
+    alignItems: 'center',
+  },
+  infoContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
   },
   itemName: {
       fontSize: 15,
-      color: "#000",
+      color: "#FFFFFF",
+      fontFamily: "AvenirNext-Bold"
   },
   itemCity: {
     fontSize: 12,
-    color: "#555",
+    color: "#F3F3F3",
+    fontFamily: "AvenirNext-DemiBold"
   },
 });
