@@ -40,9 +40,9 @@ export default class ModalScreen extends React.Component {
       return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <Text style={{ fontSize: 15, textAlign: 'center' }}>Enter the name and city of person you would like to defend</Text>
-          
+
           <FormLabel>Name</FormLabel>
-          <FormInput 
+          <FormInput
             ref={input => this.nameInput = input}
             onChangeText={(text) => {
                 this.setState({
@@ -50,7 +50,7 @@ export default class ModalScreen extends React.Component {
                 });
             }}/>
           <FormLabel>City</FormLabel>
-          <FormInput 
+          <FormInput
             ref={input => this.cityInput = input}
             onChangeText={(text) => {
                 this.setState({
