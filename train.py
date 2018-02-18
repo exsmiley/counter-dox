@@ -73,5 +73,15 @@ def sample_address(addr_dict):
 
     return address
 
+def generate_dataset(addr_dict):
+    dataset = []
+    for i in range(10000):
+        fake_address = sample_address(addr_dict)
+        dataset.append(fake_address)
+
+    return dataset
+
 addr_dict = build_addr_dict()
 print sample_address()
+
+dataset = generate_dataset(addr_dict)
