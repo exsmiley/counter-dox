@@ -40,14 +40,16 @@ export default class Notification extends React.Component {
   }
 
   render() {
-    console.warn("notification")
     return (
       <View style={styles.container}>
         <StatusBarAlert
+        ref={input => this.alertBar = input}
         visible={true}
         message="Dox detected! Would you like to counter dox?"
         style={styles.alert}
-        onPress={() => this.navigator.push({id: 'SilentAlert'})}
+        onPress={() => {
+            Fire.shared.userNode().child("getting_doxxed").set(false);
+        }}
         />
       </View>
     );

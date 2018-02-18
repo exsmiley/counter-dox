@@ -18,7 +18,7 @@ import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 
-export default class AlertScreen extends React.Component {
+export default class CounterScreen extends React.Component {
 
   constructor() {
       super();
@@ -27,7 +27,7 @@ export default class AlertScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "Alerts"
+      title: "Counters"
     }
   };
 
@@ -45,10 +45,12 @@ export default class AlertScreen extends React.Component {
 
   render() {
     var items = [];
-    if (this.state.alerts) {
-      _.forEach(this.state.alerts, (value, key) => {
-          value["id"] = key;
-          items.push(value);
+    if (this.state.sent_doxxes) {
+      _.forEach(this.state.sent_doxxes, (value, key) => {
+          items.push({
+              id: key,
+              tweet: value
+          });
       });
     }
 
@@ -58,27 +60,8 @@ export default class AlertScreen extends React.Component {
           data={items}
           keyExtractor={(item) => item.id}
           renderItem={({item}) => {
-
-            var actions;
-            if (item.triggered) {
-              actions = (
-                <Text>Already Triggered</Text>
-              )
-            }
-            else {
-              actions = (
-                <Button 
-                  title="Trigger" 
-                  onPress={() => {
-                      Fire.shared.doxx(item.id)
-                  }}
-                  />
-              )
-            }
-
             return (<View style={styles.item}>
               <Text style={styles.itemName}>{item.tweet}</Text>
-              {actions}
             </View>);
           }
         }
