@@ -122,12 +122,14 @@ const styles = StyleSheet.create({
   avatar: {
     color: "#fff",
     textAlign: "center",
-    textAlignVertical: "center"
+    textAlignVertical: "center",
+    color: "#6FED8B",
+    fontFamily: "AvenirNext-Bold"
   },
   circle: {
     borderRadius: 100,
     borderWidth: 3,
-    borderColor: 'white',
+    borderColor: "#96F3F3",
     height: 40,
     width: 40,
     justifyContent: 'center', 
